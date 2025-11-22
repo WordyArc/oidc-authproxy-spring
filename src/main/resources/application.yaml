@@ -1,3 +1,15 @@
 spring:
   application:
     name: oidc-authproxy-spring
+
+# Конкретные значения (issuer-uri, jwk-set-uri и т.п.)
+# задаются в приложении, которое подключает стартер.
+oidc:
+  # issuer-uri: https://idp.example.com/realms/your-realm
+  # jwk-set-uri: https://idp.example.com/realms/your-realm/protocol/openid-connect/certs
+  # userinfo-uri: https://idp.example.com/realms/your-realm/protocol/openid-connect/userinfo
+
+  authorities:
+    source: TOKEN
+    cache-ttl: 1m
+    mappings: []
