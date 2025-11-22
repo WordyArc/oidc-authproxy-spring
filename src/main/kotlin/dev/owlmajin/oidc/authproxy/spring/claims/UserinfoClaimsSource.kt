@@ -1,8 +1,8 @@
 package dev.owlmajin.oidc.authproxy.spring.claims
 
+import com.github.benmanes.caffeine.cache.Caffeine
 import org.springframework.web.reactive.function.client.WebClient
 import dev.owlmajin.oidc.authproxy.spring.config.OidcProperties
-import dev.owlmajin.oidc.authproxy.spring.support.buildCache
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.security.oauth2.jwt.Jwt
@@ -22,20 +22,17 @@ class UserinfoClaimsSource(
 
     private val client: WebClient = webClientBuilder.build()
 
-    private val cache = buildCache<String, Map<String, Any?>?>(
-        "userinfo",
-        properties.authorities.cacheTtl,
-        10_000L,
-    )
+    private val cache = Caffeine.newBuilder()
+        .expireAfterWrite(properties.authorities.cacheTtl)
+        .maximumSize(10_000)
+        .build<String, Map<String, Any?>?>()
 
     override fun getClaims(jwt: Jwt): Map<String, Any?> {
         val userinfoUri = properties.userinfoUri
             ?: error("oidc.userinfo-uri is required when authorities.source=USERINFO")
 
-        val loader = { fetchUserinfo(userinfoUri, jwt) ?: emptyMap() }
-        return cache
-            ?.get(jwt.tokenValue) { loader() }
-            ?: loader()
+        return cache.get(jwt.tokenValue) { fetchUserinfo(userinfoUri, jwt) }
+            ?: emptyMap()
     }
 
     private fun fetchUserinfo(uri: String, jwt: Jwt): Map<String, Any?>? {

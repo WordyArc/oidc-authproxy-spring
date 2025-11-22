@@ -1,7 +1,7 @@
 package dev.owlmajin.oidc.authproxy.spring.authorities
 
+import com.github.benmanes.caffeine.cache.Caffeine
 import dev.owlmajin.oidc.authproxy.spring.config.OidcProperties
-import dev.owlmajin.oidc.authproxy.spring.support.buildCache
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
@@ -17,17 +17,13 @@ class AuthoritiesConverter(private val properties: OidcProperties) {
         private const val DEFAULT_CACHE_MAX_SIZE = 10_000L
     }
 
-    private val cache = buildCache<Map<String, Any?>, List<String>>(
-        "authorities",
-        properties.authorities.cacheTtl,
-        DEFAULT_CACHE_MAX_SIZE
-    )
+    private val cache = Caffeine.newBuilder()
+        .expireAfterWrite(properties.authorities.cacheTtl)
+        .maximumSize(DEFAULT_CACHE_MAX_SIZE)
+        .build<Map<String, Any?>, List<String>>()
 
     fun convert(claims: Map<String, Any?>): Collection<GrantedAuthority> {
-        val authorityNames: List<String> = cache
-            ?.get(claims) { extractAuthorities(it) }
-            ?: extractAuthorities(claims)
-
+        val authorityNames = cache.get(claims) { extractAuthorities(it) }
         return AuthorityUtils.createAuthorityList(*authorityNames.toTypedArray())
     }
 
