@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: oauth2-proxy
+
+oidc:
+  # Указать endpoint server-token, который
+  # по входному access_token вернёт нормализованный userinfo.
+  # Пример:
+  # userinfo-uri: https://service-token.internal/api/v1/userinfo
+  # issuer-uri / jwk-set-uri задаёт приложение, подключающее стартер.
+  authorities:
+    source: USERINFO
+    cache-ttl: 1m
+    mappings:
+      - pattern: "^(\\S*)roles"
