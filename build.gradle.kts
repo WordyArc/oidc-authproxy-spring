@@ -1,8 +1,9 @@
 plugins {
 	kotlin("jvm") version "2.3.0-RC"
 	kotlin("plugin.spring") version "2.2.21"
-    id("java-library")
 	id("io.spring.dependency-management") version "1.1.7"
+    `java-library`
+    `maven-publish`
 }
 
 group = "dev.owlmajin"
@@ -58,4 +59,16 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+
+            groupId = project.group.toString()
+            artifactId = rootProject.name
+            version = project.version.toString()
+        }
+    }
 }
