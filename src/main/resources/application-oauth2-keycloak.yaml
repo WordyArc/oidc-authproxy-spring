@@ -1,0 +1,24 @@
+spring:
+  config:
+    activate:
+      on-profile: oauth2-keycloak
+
+oidc:
+  # issuer-uri: https://keycloak.example.com/realms/myrealm
+  # jwk-set-uri: https://keycloak.example.com/realms/myrealm/protocol/openid-connect/certs
+
+  username-claim-name: preferred_username
+  login-claim-name: preferred_username
+
+  authorities:
+    source: TOKEN
+    cache-ttl: 1m
+
+    mappings:
+      # resource_access:<client>/roles -> {client}_{role}, например myapp_ADMIN
+      - pattern: "resource_access/(?<client>[^/]+)/roles"
+        template: "${client}_${role}"
+
+      # realm_access/roles -> значение роли, как есть
+      - pattern: "realm_access/roles"
+        # template не задан -> будет roleValue как есть
