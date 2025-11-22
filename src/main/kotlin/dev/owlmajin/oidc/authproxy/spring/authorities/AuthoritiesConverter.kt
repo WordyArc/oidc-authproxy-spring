@@ -1,12 +1,10 @@
 package dev.owlmajin.oidc.authproxy.spring.authorities
 
-import com.github.benmanes.caffeine.cache.Cache
-import com.github.benmanes.caffeine.cache.Caffeine
 import dev.owlmajin.oidc.authproxy.spring.config.OidcProperties
+import dev.owlmajin.oidc.authproxy.spring.support.buildCache
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
-import java.time.Duration
 
 class AuthoritiesConverter(private val properties: OidcProperties) {
 
@@ -19,8 +17,11 @@ class AuthoritiesConverter(private val properties: OidcProperties) {
         private const val DEFAULT_CACHE_MAX_SIZE = 10_000L
     }
 
-    private val cache: Cache<Map<String, Any?>, List<String>>? =
-        buildCache(properties.authorities.cacheTtl)
+    private val cache = buildCache<Map<String, Any?>, List<String>>(
+        "authorities",
+        properties.authorities.cacheTtl,
+        DEFAULT_CACHE_MAX_SIZE
+    )
 
     fun convert(claims: Map<String, Any?>): Collection<GrantedAuthority> {
         val authorityNames: List<String> = cache
@@ -79,8 +80,9 @@ class AuthoritiesConverter(private val properties: OidcProperties) {
         val template = mapping.template
 
         val role =
-            if (template.isNullOrBlank()) { roleValue }
-            else {
+            if (template.isNullOrBlank()) {
+                roleValue
+            } else {
                 TEMPLATE_VAR_REGEX.replace(template) { matchResult ->
                     when (val varName = matchResult.groupValues[1]) {
                         "role" -> roleValue
@@ -115,16 +117,4 @@ class AuthoritiesConverter(private val properties: OidcProperties) {
         return result
     }
 
-    private fun buildCache(ttl: Duration?): Cache<Map<String, Any?>, List<String>>? {
-        if (ttl == null || ttl.isZero || ttl.isNegative) {
-            log.info("Authorities cache disabled (ttl = $ttl)")
-            return null
-        }
-
-        return Caffeine.newBuilder()
-            .expireAfterWrite(ttl)
-            .maximumSize(DEFAULT_CACHE_MAX_SIZE)
-            .build<Map<String, Any?>, List<String>>()
-            .also { log.info("Authorities cache enabled (ttl = $ttl, maxSize = $DEFAULT_CACHE_MAX_SIZE)") }
-    }
 }
