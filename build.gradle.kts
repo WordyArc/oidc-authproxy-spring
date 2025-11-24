@@ -31,23 +31,21 @@ dependencyManagement {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+    implementation("org.springframework.boot:spring-boot-autoconfigure")
+
+    implementation("org.springframework:spring-webflux")
 
     compileOnly("org.springframework.boot:spring-boot-starter-webflux")
     compileOnly("org.springframework.boot:spring-boot-starter-web")
-    compileOnly("org.springframework.boot:spring-boot-starter-security")
-
-    implementation("org.springframework.boot:spring-boot-autoconfigure")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.security:spring-security-test")
-    testImplementation(kotlin("test"))
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     implementation("com.github.ben-manes.caffeine:caffeine")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 kotlin {
