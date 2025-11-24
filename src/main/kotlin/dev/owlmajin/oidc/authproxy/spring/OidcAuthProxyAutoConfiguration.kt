@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.boot.autoconfigure.AutoConfigureBefore
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.boot.security.oauth2.server.resource.autoconfigure.reactive.ReactiveOAuth2ResourceServerAutoConfiguration
 import org.springframework.boot.security.oauth2.server.resource.autoconfigure.servlet.OAuth2ResourceServerAutoConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
@@ -19,7 +20,10 @@ import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 
 @AutoConfiguration
-@AutoConfigureBefore(OAuth2ResourceServerAutoConfiguration::class)
+@AutoConfigureBefore(
+    OAuth2ResourceServerAutoConfiguration::class,
+    ReactiveOAuth2ResourceServerAutoConfiguration::class
+)
 @EnableConfigurationProperties(OidcProperties::class)
 @Import(ClaimsSourceConfiguration::class)
 class OidcAuthProxyAutoConfiguration {

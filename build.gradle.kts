@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "dev.owlmajin"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 description = "OIDC AuthProxy Spring Boot starter"
 
 
@@ -30,14 +30,13 @@ dependencyManagement {
 }
 
 dependencies {
-    api("org.springframework.boot:spring-boot-starter-webflux")
-    api("org.springframework.boot:spring-boot-starter-web")
-    api("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-    api("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+
+    compileOnly("org.springframework.boot:spring-boot-starter-webflux")
+    compileOnly("org.springframework.boot:spring-boot-starter-web")
+    compileOnly("org.springframework.boot:spring-boot-starter-security")
 
     implementation("org.springframework.boot:spring-boot-autoconfigure")
-
-    compileOnly("org.springframework.boot:spring-boot-starter-security")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
