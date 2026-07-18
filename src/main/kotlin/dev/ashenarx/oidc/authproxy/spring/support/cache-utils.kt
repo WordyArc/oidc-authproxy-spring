@@ -1,4 +1,4 @@
-package dev.owlmajin.oidc.authproxy.spring.support
+package dev.ashenarx.oidc.authproxy.spring.support
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine

@@ -1,4 +1,4 @@
-package dev.owlmajin.oidc.authproxy.spring.config
+package dev.ashenarx.oidc.authproxy.spring.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import java.time.Duration

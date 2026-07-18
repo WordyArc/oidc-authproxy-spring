@@ -1,7 +1,7 @@
-package dev.owlmajin.oidc.authproxy.spring.claims
+package dev.ashenarx.oidc.authproxy.spring.claims
 
-import dev.owlmajin.oidc.authproxy.spring.config.AuthoritiesSource
-import dev.owlmajin.oidc.authproxy.spring.config.OidcProperties
+import dev.ashenarx.oidc.authproxy.spring.config.AuthoritiesSource
+import dev.ashenarx.oidc.authproxy.spring.config.OidcProperties
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

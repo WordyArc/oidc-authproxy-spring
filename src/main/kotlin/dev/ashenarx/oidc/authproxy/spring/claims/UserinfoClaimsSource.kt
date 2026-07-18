@@ -1,8 +1,8 @@
-package dev.owlmajin.oidc.authproxy.spring.claims
+package dev.ashenarx.oidc.authproxy.spring.claims
 
 import com.github.benmanes.caffeine.cache.Caffeine
 import org.springframework.web.reactive.function.client.WebClient
-import dev.owlmajin.oidc.authproxy.spring.config.OidcProperties
+import dev.ashenarx.oidc.authproxy.spring.config.OidcProperties
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.security.oauth2.jwt.Jwt
