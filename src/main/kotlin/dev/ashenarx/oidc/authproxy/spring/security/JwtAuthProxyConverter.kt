@@ -1,8 +1,8 @@
-package dev.owlmajin.oidc.authproxy.spring.security
+package dev.ashenarx.oidc.authproxy.spring.security
 
-import dev.owlmajin.oidc.authproxy.spring.authorities.AuthoritiesConverter
-import dev.owlmajin.oidc.authproxy.spring.claims.ClaimsSource
-import dev.owlmajin.oidc.authproxy.spring.config.OidcProperties
+import dev.ashenarx.oidc.authproxy.spring.authorities.AuthoritiesConverter
+import dev.ashenarx.oidc.authproxy.spring.claims.ClaimsSource
+import dev.ashenarx.oidc.authproxy.spring.config.OidcProperties
 import org.slf4j.LoggerFactory
 import org.springframework.core.convert.converter.Converter
 import org.springframework.http.HttpStatus

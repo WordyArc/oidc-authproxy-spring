@@ -1,10 +1,12 @@
-package dev.owlmajin.oidc.authproxy.spring.authorities
+package dev.ashenarx.oidc.authproxy.spring.authorities
 
 import com.github.benmanes.caffeine.cache.Caffeine
-import dev.owlmajin.oidc.authproxy.spring.config.OidcProperties
+import dev.ashenarx.oidc.authproxy.spring.config.OidcProperties
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
+import kotlin.collections.iterator
+import kotlin.text.get
 
 class AuthoritiesConverter(private val properties: OidcProperties) {
 

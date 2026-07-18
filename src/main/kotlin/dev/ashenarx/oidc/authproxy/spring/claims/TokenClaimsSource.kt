@@ -1,4 +1,4 @@
-package dev.owlmajin.oidc.authproxy.spring.claims
+package dev.ashenarx.oidc.authproxy.spring.claims
 
 import org.springframework.security.oauth2.jwt.Jwt
 

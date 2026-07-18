@@ -1,10 +1,10 @@
-package dev.owlmajin.oidc.authproxy.spring
+package dev.ashenarx.oidc.authproxy.spring
 
-import dev.owlmajin.oidc.authproxy.spring.authorities.AuthoritiesConverter
-import dev.owlmajin.oidc.authproxy.spring.claims.ClaimsSource
-import dev.owlmajin.oidc.authproxy.spring.claims.ClaimsSourceConfiguration
-import dev.owlmajin.oidc.authproxy.spring.config.OidcProperties
-import dev.owlmajin.oidc.authproxy.spring.security.JwtAuthProxyConverter
+import dev.ashenarx.oidc.authproxy.spring.authorities.AuthoritiesConverter
+import dev.ashenarx.oidc.authproxy.spring.claims.ClaimsSource
+import dev.ashenarx.oidc.authproxy.spring.claims.ClaimsSourceConfiguration
+import dev.ashenarx.oidc.authproxy.spring.config.OidcProperties
+import dev.ashenarx.oidc.authproxy.spring.security.JwtAuthProxyConverter
 import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.boot.autoconfigure.AutoConfigureBefore
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
